@@ -1,0 +1,5 @@
+/*
+SENDANSWERS:<answer0>:<answer1>:<answer2>:<answer3>
+SENDANSWER:<answer>
+CONNECT:<name>
+*/
