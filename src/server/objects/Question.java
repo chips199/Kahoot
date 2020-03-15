@@ -1,11 +1,11 @@
 package server.objects;
 
-public class Questions {
+public class Question {
 	
 	private String question;
 	private String[] answer;
 		
-	public Questions(String question, String[] answer) {
+	public Question(String question, String[] answer) {
 		super();
 		this.question = question;
 		this.answer = answer;
