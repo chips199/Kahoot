@@ -1,4 +1,4 @@
-package server.objects;
+package server.classes;
 
 /**
  * <p>Materialien zu den zentralen

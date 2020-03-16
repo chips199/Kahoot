@@ -2,10 +2,10 @@ package server.main;
 
 import java.util.ArrayList;
 
+import server.classes.Connection;
 import server.gui.ServerGUI;
 import server.objects.Player;
 import server.objects.Question;
-import server.objects.Connection;
 
 public class Server {
 	private ArrayList<Question> questions;
