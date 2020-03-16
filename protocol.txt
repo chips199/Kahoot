@@ -1,5 +1,7 @@
 /*
-SENDANSWERS:<answer0>:<answer1>:<answer2>:<answer3>
-SENDANSWER:<answer>
-CONNECT:<name>
+SENDANSWERS:<answer0>:<answer1>:<answer2>:<answer3>		// mögliche Antworten an Client schicken
+SENDANSWER:<answer>										// ausgewählte Antwort an Server schicken
+CHANGENAME:<NAME>										// Name ändern
+WELCOMEBACK:<NAME>:<POINTS>  							// Willkommen-Zurück-Nachricht --> mit Punktestand
+WELCOME:<NAME> 											// Sendet den als erstes vergebenen Namen an den Client und bestätigt die Verbindung
 */

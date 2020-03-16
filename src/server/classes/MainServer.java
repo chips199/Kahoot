@@ -18,7 +18,7 @@ import java.net.*;
  *
  * @version 2011-12-12
  */ 
-public abstract class Server
+public abstract class MainServer
 {
 
    // Objekte
@@ -38,14 +38,14 @@ public abstract class Server
     private class ServerConnection extends Connection
     {
         // Objekte
-        Server server;
+        MainServer server;
         //Connection sConnection;
         /*
         Die ServerVerbindung wurde inialisiert.
         @param pSocket Socket, der die Verbindung beschreibt
         @param pServer Server, den die ServerVerbindung kennen lernt
         */
-        public ServerConnection(Socket pSocket, Server pServer)
+        public ServerConnection(Socket pSocket, MainServer pServer)
         {
             super(pSocket);
             server = pServer;
@@ -79,9 +79,9 @@ public abstract class Server
     private class ServerSchleife extends Thread
     {
     
-        private Server server;
+        private MainServer server;
         
-        public ServerSchleife(Server pServer)
+        public ServerSchleife(MainServer pServer)
         {
             server = pServer;
         }
@@ -112,7 +112,7 @@ public abstract class Server
     Der Server ist initialisiert.
     @param pPortNr Portnummer des Sockets
     */
-    public Server(int pPortNr)
+    public MainServer(int pPortNr)
     {
         try
         {
