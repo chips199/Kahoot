@@ -1,21 +1,17 @@
 package server.main;
 
-import java.util.ArrayList;
 
 import server.classes.MainServer;
 import server.gui.ServerGUI;
 import server.objects.Player;
-import server.objects.Question;
 
 public class Server extends MainServer {
-	private ArrayList<Question> questions;
-	private ArrayList<Player> players;
+	private Controller controller;
 	private ServerGUI gui;
 	
-	public Server(int port) {
+	public Server(int port, Controller controller) {
 		super(port);
-		questions = new ArrayList<Question>();
-		players = new ArrayList<Player>();
+		this.controller = controller;
 	}
 	
 	/**
@@ -25,15 +21,16 @@ public class Server extends MainServer {
 	 */
 	public void processNewConnection(String pClientIP, int pClientPort) {
 		boolean newPlayer = true;
-		for(Player player: players) {
+		for(Player player: controller.getPlayers()) {
 			if(player.getIp().equals(pClientIP)) {
+				player.setPort(pClientPort);
 				send(pClientIP, pClientPort, "WELCOMEBACK:" + player.getName() + ":" + player.getPoints());
 				newPlayer = false;
 				break;
 			}
 		}
 		if(newPlayer) {
-			players.add(new Player(pClientIP,pClientIP, 0));
+			controller.addPlayer(new Player(pClientIP,pClientIP, pClientPort, 0));
 			send(pClientIP, pClientPort, "WELCOME:" + pClientIP + ":0");
 		}
 	}
@@ -43,28 +40,24 @@ public class Server extends MainServer {
 		// Dem Nutzer einen neuen Namen vergeben
 		if (pMessage.startsWith("CHANGENAME:")) {
 			String name = pMessage.split(":")[1];
-			for(Player player:players) {
+			for(Player player:controller.getPlayers()) {
 				if(player.getIp().equals(pClientIP)) {
 					player.setName(name);
 					break;
 				}
 			}
+		// User antwortet auf Frage
+		} else if(pMessage.startsWith("SENDANSWER:")) {
+			long currentTimeStamp = System.currentTimeMillis();
+			int answer = (int) Integer.valueOf(pMessage.split(":")[1]);
+			if(controller.checkAnswer(answer)) {
+				for(Player player:controller.getPlayers()) {
+					if(player.getIp().equals(pClientIP)) {
+						player.setPoints((int) (player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
+					}
+				}
+			}
 		}
-	}
-	
-	public boolean addPlayer(Player player) {
-		return players.add(player);
-	}
-	
-	public ArrayList<Player> getPlayers(){
-		return players;
-	}
-	
-	public boolean addQuestion(Question question) {
-		return questions.add(question);
-	}
-	
-	public ArrayList<Question> getQuestions(){
-		return questions;
+		
 	}
 }

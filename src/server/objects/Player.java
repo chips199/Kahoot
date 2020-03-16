@@ -3,9 +3,10 @@ package server.objects;
 public class Player {
 	private String name;
 	private String ip;
+	private int port;
 	private int points;
 	
-	public Player(String name, String ip, int points) {
+	public Player(String name, String ip, int port, int points) {
 		super();
 		this.name = name;
 		this.ip = ip;
@@ -23,6 +24,12 @@ public class Player {
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+	public int getPort() {
+		return port;
+	}
+	public void setPort(int port) {
+		this.port = port;
 	}
 	public int getPoints() {
 		return points;
