@@ -30,13 +30,14 @@ public class Server extends MainServer {
 			}
 		}
 		if(newPlayer) {
-			controller.addPlayer(new Player(pClientIP,pClientIP, pClientPort, 0));
+			System.out.println("Port:" + pClientPort);
+			controller.addPlayer(new Player(pClientIP, pClientIP, pClientPort, 0));
 			send(pClientIP, pClientPort, "WELCOME:" + pClientIP + ":0");
 		}
 	}
 	
 	public void processMessage(String pClientIP, int pClientPort, String pMessage) {
-		
+		System.out.println("Port2" + pClientPort);
 		// Dem Nutzer einen neuen Namen vergeben
 		if (pMessage.startsWith("CHANGENAME:")) {
 			String name = pMessage.split(":")[1];
@@ -50,10 +51,11 @@ public class Server extends MainServer {
 		} else if(pMessage.startsWith("SENDANSWER:")) {
 			long currentTimeStamp = System.currentTimeMillis();
 			int answer = (int) Integer.valueOf(pMessage.split(":")[1]);
-			if(controller.checkAnswer(answer)) {
+			if(controller.checkAnswer(answer) && currentTimeStamp - controller.getStartQuestionTime() <= 10000) {
 				for(Player player:controller.getPlayers()) {
 					if(player.getIp().equals(pClientIP)) {
 						player.setPoints((int) (player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
+						System.out.println(player.getName() + ":" + player.getPoints());
 					}
 				}
 			}

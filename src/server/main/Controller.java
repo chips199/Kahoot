@@ -33,7 +33,7 @@ public class Controller {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} while (startQuestionTime + 10000 <= System.currentTimeMillis() || everyoneHasAnswered());
+			} while (startQuestionTime + 10000 >= System.currentTimeMillis() || everyoneHasAnswered());
 			sendPointsToEach();
 		}
 	}
@@ -48,7 +48,7 @@ public class Controller {
 	}
 	
 	public boolean checkAnswer(int answer) {
-		return false;
+		return true;
 	}
 	
 	public String [] mixAnswers(String [] answers) {
