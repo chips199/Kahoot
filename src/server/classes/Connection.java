@@ -71,6 +71,7 @@ public class Connection extends Thread {
 */
     public String receive() {
         try {
+        	System.out.println(vomHost.readLine());
             return vomHost.readLine();
         }
         catch ( IOException e) {
@@ -82,6 +83,7 @@ public class Connection extends Thread {
 * an den Server versandt.
 */
     public void send(String nachricht) {
+    	System.out.println("gesendet" + nachricht);
         zumHost.println(nachricht);
         zumHost.flush();
     }
