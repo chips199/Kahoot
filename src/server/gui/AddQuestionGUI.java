@@ -155,7 +155,7 @@ public class AddQuestionGUI extends JPanel {
 		JButton btnForward = new JButton("Weiter");
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				serverGUI.setPanel(new ControllerGUI(), "Kohaat - Serverübersicht");
+				serverGUI.setPanel(new ControllerGUI(controller), "Kohaat - Serverübersicht");
 			}
 		});
 		GridBagConstraints gbc_btnForward = new GridBagConstraints();
@@ -163,6 +163,11 @@ public class AddQuestionGUI extends JPanel {
 		gbc_btnForward.gridy = 6;
 		add(btnForward, gbc_btnForward);
 
+	}
+
+	public void setQuestion(String question) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
