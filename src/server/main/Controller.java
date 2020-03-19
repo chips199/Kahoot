@@ -2,6 +2,8 @@ package server.main;
 
 import java.util.ArrayList;
 
+import server.gui.AddQuestionGUI;
+import server.gui.ControllerGUI;
 import server.gui.ServerGUI;
 import server.objects.Player;
 import server.objects.Question;
@@ -10,6 +12,7 @@ public class Controller {
 	private ArrayList<Question> questions;
 	private ArrayList<Player> players;
 	private ServerGUI gui;
+	private ControllerGUI controllerGUI;
 	private Server server;
 	private long startQuestionTime;
 	private int serverPort;
@@ -22,18 +25,24 @@ public class Controller {
 	/**
 	 * Methode um das Quiz zu starten
 	 */
-	public void startQuiz() {
+	public void startQuiz(ControllerGUI controllerGUI) {
+		this.controllerGUI = controllerGUI;
 		for(Question question: questions) {
 			String [] mixedAnswers = mixAnswers(question.getAnswer());
+			controllerGUI.setQuestion(question.getQuestion());
 			server.sendToAll("SENDANSWERS:" + mixedAnswers[0] + ":" + mixedAnswers[1] + ":" + mixedAnswers[2] + ":" + mixedAnswers[3]);
 			startQuestionTime = System.currentTimeMillis();
+			
 			do {
+				int remainingTime = 10 - (int) ((System.currentTimeMillis() - startQuestionTime) / 1000);
+				controllerGUI.setRemainingTime(remainingTime);
 				try {
 					Thread.sleep(10);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} while (startQuestionTime + 10000 >= System.currentTimeMillis() || everyoneHasAnswered());
+			int remainingTime = 10 - (int) ((System.currentTimeMillis() - startQuestionTime) / 1000);
 			sendPointsToEach();
 		}
 	}
