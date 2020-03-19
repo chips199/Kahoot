@@ -1,48 +1,32 @@
 package server.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
-import java.awt.EventQueue;
+import java.awt.Panel;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+
+import server.main.Controller;
 
 public class ServerGUI extends JFrame {
 
-	private JPanel contentPane;
+	private Controller controller;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ServerGUI frame = new ServerGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ServerGUI() {
-		
-		getContentPane().add(new AddQuestionGUI());
+	public ServerGUI(Controller controller) {
+		this.controller = controller;
+		getContentPane().add(new AddQuestionGUI(this, this.controller));
+		setName("Kohaat - Frage hinzufügen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setVisible(true);
 		
 		class T1 extends Thread {
 			public void run() {
-				PortInputGUI portInput = new PortInputGUI();
+				PortInputGUI portInput = new PortInputGUI(controller);
 				portInput.setModal(true);
 				portInput.setModalityType(ModalityType.TOOLKIT_MODAL);
 				portInput.setAlwaysOnTop(true);
@@ -52,6 +36,14 @@ public class ServerGUI extends JFrame {
 		t1.start();
 		
 		
+	}
+
+	public void setPanel(JPanel panel, String windowTitle) {
+		// TODO Auto-generated method stub
+		getContentPane().removeAll();
+		getContentPane().add(panel);
+		setTitle(windowTitle);
+		setVisible(true);
 	}
 
 }

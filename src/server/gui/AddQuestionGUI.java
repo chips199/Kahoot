@@ -5,20 +5,32 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
+
+import server.main.Controller;
+import server.objects.Question;
+
 import java.awt.Insets;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddQuestionGUI extends JPanel {
-	private JTextField textField;
+	private JTextField textField_question;
 	private JTextField textField_rightAnswer;
 	private JTextField textField_wrongAnswer1;
 	private JTextField textField_wrongAnswer2;
 	private JTextField textField_wrongAnswer3;
+	
+	private Controller controller;
+	private ServerGUI serverGUI;
 
 	/**
 	 * Create the panel.
 	 */
-	public AddQuestionGUI() {
+	public AddQuestionGUI(ServerGUI serverGUI, Controller controller) {
+		this.controller = controller;
+		this.serverGUI = serverGUI;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
@@ -35,15 +47,15 @@ public class AddQuestionGUI extends JPanel {
 		gbc_lblNewLabel.gridy = 0;
 		add(lblNewLabel, gbc_lblNewLabel);
 		
-		textField = new JTextField();
+		textField_question = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.anchor = GridBagConstraints.NORTH;
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 0;
-		add(textField, gbc_textField);
-		textField.setColumns(10);
+		add(textField_question, gbc_textField);
+		textField_question.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Richtige Antwort:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -115,6 +127,24 @@ public class AddQuestionGUI extends JPanel {
 		textField_wrongAnswer3.setColumns(10);
 		
 		JButton btnAddQuestion = new JButton("Frage hinzuf\u00FCgen");
+		btnAddQuestion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Eingabe aus Feldern auslesen
+				String [] answers = new String[4];
+				answers[0] = textField_rightAnswer.getText();
+				answers[1] = textField_wrongAnswer1.getText();
+				answers[2] = textField_wrongAnswer2.getText();
+				answers[3] = textField_wrongAnswer3.getText();
+				// Frage zum Controller hinzufügen
+				controller.addQuestion(new Question(textField_question.getText(), answers));
+				// Eingabefelder leeren, um eine erneute Eingabe zu ermöglichen
+				textField_question.setText("");
+				textField_rightAnswer.setText("");
+				textField_wrongAnswer1.setText("");
+				textField_wrongAnswer2.setText("");
+				textField_wrongAnswer3.setText("");
+			}
+		});
 		GridBagConstraints gbc_btnAddQuestion = new GridBagConstraints();
 		gbc_btnAddQuestion.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAddQuestion.fill = GridBagConstraints.VERTICAL;
@@ -123,6 +153,11 @@ public class AddQuestionGUI extends JPanel {
 		add(btnAddQuestion, gbc_btnAddQuestion);
 		
 		JButton btnForward = new JButton("Weiter");
+		btnForward.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				serverGUI.setPanel(new ControllerGUI(), "Kohaat - Serverübersicht");
+			}
+		});
 		GridBagConstraints gbc_btnForward = new GridBagConstraints();
 		gbc_btnForward.gridx = 1;
 		gbc_btnForward.gridy = 6;
