@@ -12,11 +12,11 @@ public class Controller {
 	private ServerGUI gui;
 	private Server server;
 	private long startQuestionTime;
+	private int serverPort;
 	
-	public Controller (int port) {
+	public Controller () {
 		questions = new ArrayList<Question>();
 		players = new ArrayList<Player>();
-		server = new Server(port, this);
 	}
 	
 	/**
@@ -89,5 +89,15 @@ public class Controller {
 	
 	public long getStartQuestionTime () {
 		return startQuestionTime;
+	}
+
+	public void setPort(int port) {
+		// TODO Auto-generated method stub
+		this.serverPort = port;
+	}
+
+	public void startServer() {
+		// TODO Auto-generated method stub
+		server = new Server(serverPort, this);
 	}
 }

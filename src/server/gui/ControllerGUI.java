@@ -13,14 +13,14 @@ import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Controller extends JPanel {
+public class ControllerGUI extends JPanel {
 	private JTable table;
 	private final DefaultTableModel model;
 
 	/**
 	 * Create the panel.
 	 */
-	public Controller() {
+	public ControllerGUI() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};

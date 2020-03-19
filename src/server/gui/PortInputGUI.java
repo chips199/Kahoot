@@ -7,36 +7,35 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import server.main.Controller;
+
 import java.awt.GridBagLayout;
 import javax.swing.JSpinner;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Insets;
 import javax.swing.SpinnerNumberModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PortInputGUI extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			PortInputGUI dialog = new PortInputGUI();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private Controller controller;
+	private JSpinner spinnerPort;
 
 	/**
 	 * Create the dialog.
 	 */
-	public PortInputGUI() {
+	public PortInputGUI(Controller controller) {
+		this.controller = controller;
+		
+		setResizable(false);
 		setAlwaysOnTop(true);
-		setTitle("Port Eingabe");
+		setTitle("Kohaat - Port Eingabe");
 		setBounds(100, 100, 185, 148);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,8 +56,8 @@ public class PortInputGUI extends JDialog {
 			contentPanel.add(lblPort, gbc_lblPort);
 		}
 		{
-			JSpinner spinnerPort = new JSpinner();
-			spinnerPort.setModel(new SpinnerNumberModel(new Integer(1111), null, null, new Integer(1)));
+			spinnerPort = new JSpinner();
+			spinnerPort.setModel(new SpinnerNumberModel(new Integer((int) (Math.random() * 1000 + 1000)), null, null, new Integer(1)));
 			GridBagConstraints gbc_spinnerPort = new GridBagConstraints();
 			gbc_spinnerPort.fill = GridBagConstraints.HORIZONTAL;
 			gbc_spinnerPort.insets = new Insets(0, 0, 0, 5);
@@ -72,12 +71,20 @@ public class PortInputGUI extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						controller.setPort((int) spinnerPort.getValue());
+						controller.startServer();
+						dispose();
+						JOptionPane.showMessageDialog(null, "Der Server läuft jetzt unter Port " + spinnerPort.getValue() + ".", "Informaton", JOptionPane.INFORMATION_MESSAGE); 
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 		}
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setVisible(true);
 	}
 
