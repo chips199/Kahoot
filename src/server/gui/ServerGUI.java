@@ -1,11 +1,14 @@
 package server.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class ServerGUI extends JFrame {
 
@@ -31,12 +34,24 @@ public class ServerGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ServerGUI() {
+		
+		getContentPane().add(new AddQuestionGUI());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		setVisible(true);
+		
+		class T1 extends Thread {
+			public void run() {
+				PortInputGUI portInput = new PortInputGUI();
+				portInput.setModal(true);
+				portInput.setModalityType(ModalityType.TOOLKIT_MODAL);
+				portInput.setAlwaysOnTop(true);
+			}
+		}
+		T1 t1 = new T1();
+		t1.start();
+		
+		
 	}
 
 }
