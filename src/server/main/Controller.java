@@ -1,6 +1,9 @@
 package server.main;
 
 import java.util.ArrayList;
+import java.util.Random;
+
+import javax.swing.JOptionPane;
 
 import server.gui.AddQuestionGUI;
 import server.gui.ControllerGUI;
@@ -14,6 +17,7 @@ public class Controller {
 	private ServerGUI gui;
 	private ControllerGUI controllerGUI;
 	private Server server;
+	private Question currentQuestion;
 	private long startQuestionTime;
 	private int serverPort;
 	
@@ -28,6 +32,7 @@ public class Controller {
 	public void startQuiz(ControllerGUI controllerGUI) {
 		this.controllerGUI = controllerGUI;
 		for(Question question: questions) {
+			currentQuestion = question;
 			String [] mixedAnswers = mixAnswers(question.getAnswer());
 			controllerGUI.setQuestion(question.getQuestion());
 			server.sendToAll("SENDANSWERS:" + mixedAnswers[0] + ":" + mixedAnswers[1] + ":" + mixedAnswers[2] + ":" + mixedAnswers[3]);
@@ -41,26 +46,41 @@ public class Controller {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} while (startQuestionTime + 10000 >= System.currentTimeMillis() || everyoneHasAnswered());
+			} while (startQuestionTime + 10000 >= System.currentTimeMillis() || checkEveryoneHasAnswered());
 			int remainingTime = 10 - (int) ((System.currentTimeMillis() - startQuestionTime) / 1000);
 			sendPointsToEach();
 		}
+		rangliste();
 	}
 	
 	/**
 	 * Überprüft ob jeder auf die Frage geantwortet hat.
 	 * @return boolean
 	 */
-	public boolean everyoneHasAnswered() {
+	public boolean checkEveryoneHasAnswered() {
 		
 		return false;
 	}
 	
-	public boolean checkAnswer(int answer) {
-		return true;
+	public boolean checkAnswer(String [] answers, String answer) {
+		return answer.equals(answers[0]);
 	}
 	
+	/**
+	 * Mischt das Array durch
+	 * @param answers
+	 * @return
+	 */
 	public String [] mixAnswers(String [] answers) {
+		 String tmp;
+		 int rand;
+		 Random r = new Random();
+		   for(int i =0; i < answers.length; i++){
+		     rand = r.nextInt(answers.length);
+		     tmp = answers[i]; 
+		     answers[i] = answers[rand]; 
+		     answers[rand] =tmp;
+		   }
 		return answers;
 	}
 	
@@ -104,7 +124,32 @@ public class Controller {
 		// TODO Auto-generated method stub
 		this.serverPort = port;
 	}
-
+	public ControllerGUI getControllerGUI() {
+		return controllerGUI;
+	}
+	public void setControllerGUI(ControllerGUI controllerGUI) {
+		this.controllerGUI = controllerGUI;
+	}
+	public Question getCurrentQuestion() {
+		return currentQuestion;
+	}
+	public void setCurrentQuestion(Question question) {
+		this.currentQuestion = currentQuestion;
+	}
+	
+	/**
+	 * Ausgabe vom Spieler, der den ersten Platz erreicht hat.
+	 */
+	public void rangliste() {
+		Player ersterPlatz = new Player("", "", 0, -10);
+		for(Player player: players) {
+			if(player.getPoints()>ersterPlatz.getPoints()) {
+				ersterPlatz = player;
+			}
+		}
+		JOptionPane.showMessageDialog(null, ersterPlatz.getName() + " ist mit " + ersterPlatz.getPoints() + " auf dem ersten Platz.", "Info", JOptionPane.INFORMATION_MESSAGE); 
+	}
+	
 	public void startServer() {
 		// TODO Auto-generated method stub
 		server = new Server(serverPort, this);

@@ -9,21 +9,24 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
 import java.awt.Dialog.ModalityType;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Random;
 import java.awt.Font;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import server.main.Controller;
+import server.objects.Player;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ControllerGUI extends JPanel {
-	private JTable table;
 	private JLabel lblQuestion;
 	private JLabel lblRemainingTime;
-	private final DefaultTableModel model;
+	private DefaultTableModel model;
 
 	private Controller controller;
 	
@@ -83,29 +86,6 @@ public class ControllerGUI extends JPanel {
         
         // Die Titel der Spalten setzen
         model.setColumnIdentifiers( new Object[]{ "Platz", "Name", "Punktestand"});
-        
-        // Das Model mit zufälligen Daten befüllen
-        Random random = new Random();
-        for( int r = 0; r < 10; r++ ){
-            Object[] row = new Object[ model.getColumnCount() ];
-            
-            for( int c = 0; c < row.length; c++ ){
-                row[c] = random.nextInt( 9 ) + 1;
-            }
-            
-            model.addRow( row );
-        }
-	        
-        
-		table = new JTable(model);
-		table.setEnabled(false);
-		GridBagConstraints gbc_table = new GridBagConstraints();
-		gbc_table.fill = GridBagConstraints.BOTH;
-		gbc_table.gridx = 2;
-		gbc_table.gridy = 1;
-		JScrollPane sp = new JScrollPane(table);
-		
-		add(sp, gbc_table);
 
 	}
 
@@ -123,5 +103,4 @@ public class ControllerGUI extends JPanel {
 		}
 		lblRemainingTime.setText("Restliche Zeit: " + stringTime + "s");
 	}
-
 }

@@ -23,13 +23,16 @@ public class AddQuestionGUI extends JPanel {
 	
 	private Controller controller;
 	private ServerGUI serverGUI;
+	private ControllerGUI controllerGUI;
 
 	/**
 	 * Create the panel.
 	 */
 	public AddQuestionGUI(ServerGUI serverGUI, Controller controller) {
-		this.controller = controller;
-		this.serverGUI = serverGUI;
+		this.controller 	= controller;
+		this.serverGUI 		= serverGUI;
+		this.controllerGUI 	= new ControllerGUI(controller);
+		controller.setControllerGUI(controllerGUI);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
@@ -155,7 +158,7 @@ public class AddQuestionGUI extends JPanel {
 		JButton btnForward = new JButton("Weiter");
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				serverGUI.setPanel(new ControllerGUI(controller), "Kohaat - Serverübersicht");
+				serverGUI.setPanel(controllerGUI, "Kohaat - Serverübersicht");
 			}
 		});
 		GridBagConstraints gbc_btnForward = new GridBagConstraints();
@@ -163,11 +166,6 @@ public class AddQuestionGUI extends JPanel {
 		gbc_btnForward.gridy = 6;
 		add(btnForward, gbc_btnForward);
 
-	}
-
-	public void setQuestion(String question) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

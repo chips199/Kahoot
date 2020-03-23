@@ -76,7 +76,7 @@ public class PortInputGUI extends JDialog {
 						controller.setPort((int) spinnerPort.getValue());
 						controller.startServer();
 						dispose();
-						JOptionPane.showMessageDialog(null, "Der Server läuft jetzt unter Port " + spinnerPort.getValue() + ".", "Informaton", JOptionPane.INFORMATION_MESSAGE); 
+						JOptionPane.showMessageDialog(null, "Der Server läuft jetzt unter Port " + spinnerPort.getValue() + ".", "Information", JOptionPane.INFORMATION_MESSAGE); 
 					}
 				});
 				okButton.setActionCommand("OK");

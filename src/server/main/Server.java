@@ -34,6 +34,7 @@ public class Server extends MainServer {
 			controller.addPlayer(new Player(pClientIP, pClientIP, pClientPort, 0));
 			send(pClientIP, pClientPort, "WELCOME:" + pClientIP + ":0");
 		}
+		//controller.getControllerGUI().showRangliste();
 	}
 	
 	public void processMessage(String pClientIP, int pClientPort, String pMessage) {
@@ -50,16 +51,26 @@ public class Server extends MainServer {
 		// User antwortet auf Frage
 		} else if(pMessage.startsWith("SENDANSWER:")) {
 			long currentTimeStamp = System.currentTimeMillis();
-			int answer = (int) Integer.valueOf(pMessage.split(":")[1]);
-			if(controller.checkAnswer(answer) && currentTimeStamp - controller.getStartQuestionTime() <= 10000) {
+			String answer = pMessage.split(":")[1];
+			if(controller.checkAnswer(controller.getCurrentQuestion().getAnswer(), answer) && currentTimeStamp - controller.getStartQuestionTime() <= 10000) {
 				for(Player player:controller.getPlayers()) {
 					if(player.getIp().equals(pClientIP)) {
-						player.setPoints((int) (player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
-						System.out.println(player.getName() + ":" + player.getPoints());
+						if(player.getPort() != 0) {
+							player.setPoints((int) (player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
+							System.out.println(player.getName() + ":" + player.getPoints());
+						}
 					}
 				}
 			}
 		}
 		
+	}
+	public void processClosedConnection(String pClientIP, int pClientPort) {
+		for(Player player:controller.getPlayers()) {
+			if(player.getIp().equals(pClientIP)) {
+				player.setPort(0);
+				break;
+			}
+		}
 	}
 }

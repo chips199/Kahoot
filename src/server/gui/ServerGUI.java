@@ -9,17 +9,14 @@ import javax.swing.JPanel;
 import server.main.Controller;
 
 public class ServerGUI extends JFrame {
-
 	private Controller controller;
-
-
 	/**
 	 * Create the frame.
 	 */
 	public ServerGUI(Controller controller) {
 		this.controller = controller;
 		getContentPane().add(new AddQuestionGUI(this, this.controller));
-		setName("Kohaat - Frage hinzufügen");
+		setTitle("Kohaat - Fragen erstellen");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setVisible(true);
