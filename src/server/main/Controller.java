@@ -46,12 +46,17 @@ public class Controller {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} while (startQuestionTime + 10000 >= System.currentTimeMillis());
+			} while (startQuestionTime + 10000 >= System.currentTimeMillis() && !everyOneHasAnswered());
 			sendPointsToEach();
 		}
 		rangliste();
 	}
 		
+	private boolean everyOneHasAnswered() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public boolean checkAnswer(String [] answers, String answer) {
 		return answer.equals(answers[0]);
 	}
@@ -123,7 +128,7 @@ public class Controller {
 	public Question getCurrentQuestion() {
 		return currentQuestion;
 	}
-	public void setCurrentQuestion(Question question) {
+	public void setCurrentQuestion(Question currentQuestion) {
 		this.currentQuestion = currentQuestion;
 	}
 	
