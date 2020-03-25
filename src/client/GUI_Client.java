@@ -1,4 +1,4 @@
-package me.cookiesfor;
+package client;
 
 import java.awt.*;
 import javax.swing.*;
@@ -56,7 +56,7 @@ public class GUI_Client extends JFrame implements ActionListener
         nameInput.setBounds(200,100,200,20);
         add(nameInput);
 
-        connect = new JButton("Connet");
+        connect = new JButton("Connect");
         connect.setBounds(30,150,150,40);
         add (connect);
         connect.addActionListener(this);
@@ -97,7 +97,7 @@ public class GUI_Client extends JFrame implements ActionListener
 
             try {
 
-                kohaatClient = new KohaatClient(ipInput.getText(), Integer.getInteger(portInput.getText()), nameInput.getText(), this);
+                kohaatClient = new KohaatClient(ipInput.getText(), Integer.valueOf(portInput.getText()), nameInput.getText(), this);
 
                 errorLog.setVisible(false);
                 ipInputLabel.setVisible(false);
@@ -122,6 +122,7 @@ public class GUI_Client extends JFrame implements ActionListener
                 portInput.setText("");
 
                 System.out.println(e.getMessage());
+                e.printStackTrace();
                 errorLog.setText("An error occured while establishing your connection.");
             }
 

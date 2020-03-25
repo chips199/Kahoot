@@ -1,4 +1,4 @@
-package me.cookiesfor;
+package client;
 
 /**
  * <p>Materialien zu den zentralen
@@ -13,6 +13,8 @@ package me.cookiesfor;
  *
  * @version 2010-10-24
  */
+
+
 public abstract class Client
 {
 

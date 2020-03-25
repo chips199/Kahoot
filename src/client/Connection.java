@@ -16,7 +16,7 @@
  *
  * @version 2010-10-24
  */
-package me.cookiesfor;
+package client;
 
 import java.net.*;
 import java.io.*;

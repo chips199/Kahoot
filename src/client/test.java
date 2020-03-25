@@ -1,4 +1,4 @@
-package me.cookiesfor;
+package client;
 
 public class test {
 
