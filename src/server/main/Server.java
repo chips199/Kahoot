@@ -57,7 +57,7 @@ public class Server extends MainServer {
 					if(player.getIp().equals(pClientIP)) {
 						if(player.getPort() != 0) {
 							player.setPoints((int) (player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
-							System.out.println(player.getName() + ":" + player.getPoints());
+							System.out.println(player.getPoints());
 						}
 					}
 				}

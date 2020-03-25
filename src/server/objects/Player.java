@@ -10,6 +10,7 @@ public class Player {
 		super();
 		this.name = name;
 		this.ip = ip;
+		this.port=port;
 		this.points = points;
 	}
 	

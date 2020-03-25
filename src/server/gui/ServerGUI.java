@@ -31,8 +31,6 @@ public class ServerGUI extends JFrame {
 		}
 		T1 t1 = new T1();
 		t1.start();
-		
-		
 	}
 
 	public void setPanel(JPanel panel, String windowTitle) {

@@ -46,21 +46,12 @@ public class Controller {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			} while (startQuestionTime + 10000 >= System.currentTimeMillis() || checkEveryoneHasAnswered());
+			} while (startQuestionTime + 10000 >= System.currentTimeMillis());
 			sendPointsToEach();
 		}
 		rangliste();
 	}
-	
-	/**
-	 * Überprüft ob jeder auf die Frage geantwortet hat.
-	 * @return boolean
-	 */
-	public boolean checkEveryoneHasAnswered() {
 		
-		return false;
-	}
-	
 	public boolean checkAnswer(String [] answers, String answer) {
 		return answer.equals(answers[0]);
 	}
@@ -146,7 +137,7 @@ public class Controller {
 				ersterPlatz = player;
 			}
 		}
-		JOptionPane.showMessageDialog(null, ersterPlatz.getName() + " ist mit " + ersterPlatz.getPoints() + " auf dem ersten Platz.", "Info", JOptionPane.INFORMATION_MESSAGE); 
+		JOptionPane.showMessageDialog(null, ersterPlatz.getName() + " ist mit " + ersterPlatz.getPoints() + " Punkten auf dem ersten Platz.", "Info", JOptionPane.INFORMATION_MESSAGE); 
 	}
 	
 	public void startServer() {

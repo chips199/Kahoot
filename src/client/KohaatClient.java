@@ -32,7 +32,7 @@ public class KohaatClient extends Client {
         if(message.startsWith("SENDPOINTS")) {
 
             String[] parameter = message.split(":");
-            this.points = Integer.getInteger(parameter[1]);
+            this.points = Integer.valueOf(parameter[1]);
 
             gui.newStatus(this.name, this.points);
         }
