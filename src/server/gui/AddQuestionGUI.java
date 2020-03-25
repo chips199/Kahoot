@@ -139,7 +139,7 @@ public class AddQuestionGUI extends JPanel {
 				answers[2] = textField_wrongAnswer2.getText();
 				answers[3] = textField_wrongAnswer3.getText();
 				// Frage zum Controller hinzufügen
-				controller.addQuestion(new Question(textField_question.getText(), answers));
+				controller.addQuestion(new Question(textField_question.getText(), answers, textField_rightAnswer.getText()));
 				// Eingabefelder leeren, um eine erneute Eingabe zu ermöglichen
 				textField_question.setText("");
 				textField_rightAnswer.setText("");

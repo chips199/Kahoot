@@ -49,14 +49,16 @@ public class Server extends MainServer {
 				}
 			}
 		// User antwortet auf Frage
-		} else if(pMessage.startsWith("SENDANSWER:")) {
+		} else if(pMessage.startsWith("SENDANSWER")) {
+			System.out.println("asd");
 			long currentTimeStamp = System.currentTimeMillis();
 			String answer = pMessage.split(":")[1];
-			if(controller.checkAnswer(controller.getCurrentQuestion().getAnswer(), answer) && currentTimeStamp - controller.getStartQuestionTime() <= 10000) {
+			System.out.println("debug " + (currentTimeStamp - controller.getStartQuestionTime() <= 10000));
+			if(controller.checkAnswer(controller.getCurrentQuestion().getCorrectAnswer(), answer) && currentTimeStamp - controller.getStartQuestionTime() <= 10000) {
 				for(Player player:controller.getPlayers()) {
 					if(player.getIp().equals(pClientIP)) {
 						if(player.getPort() != 0) {
-							player.setPoints((int) (player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
+							player.setPoints((player.getPoints() + currentTimeStamp - controller.getStartQuestionTime()));
 							System.out.println(player.getPoints());
 						}
 					}

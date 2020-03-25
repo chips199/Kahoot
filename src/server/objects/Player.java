@@ -4,7 +4,7 @@ public class Player {
 	private String name;
 	private String ip;
 	private int port;
-	private int points;
+	private long points;
 	
 	public Player(String name, String ip, int port, int points) {
 		super();
@@ -32,13 +32,10 @@ public class Player {
 	public void setPort(int port) {
 		this.port = port;
 	}
-	public int getPoints() {
+	public long getPoints() {
 		return points;
 	}
-	public void setPoints(int points) {
+	public void setPoints(long points) {
 		this.points = points;
-	}
-	public int compareTo(Player player){
-		return ((Integer)this.getPoints()).compareTo((Integer)player.getPoints());
 	}
 }

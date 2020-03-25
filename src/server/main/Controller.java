@@ -37,7 +37,6 @@ public class Controller {
 			controllerGUI.setQuestion(question.getQuestion());
 			server.sendToAll("SENDANSWERS:" + mixedAnswers[0] + ":" + mixedAnswers[1] + ":" + mixedAnswers[2] + ":" + mixedAnswers[3]);
 			startQuestionTime = System.currentTimeMillis();
-			
 			do {
 				int remainingTime = 10 - (int) ((System.currentTimeMillis() - startQuestionTime) / 1000);
 				controllerGUI.setRemainingTime(remainingTime);
@@ -57,8 +56,9 @@ public class Controller {
 		return false;
 	}
 
-	public boolean checkAnswer(String [] answers, String answer) {
-		return answer.equals(answers[0]);
+	public boolean checkAnswer(String rightanswers, String answer) {
+		System.out.println(answer + " richtige: " + rightanswers);
+		return answer.equals(rightanswers);
 	}
 	
 	/**

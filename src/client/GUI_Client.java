@@ -15,7 +15,7 @@ public class GUI_Client extends JFrame implements ActionListener
     public GUI_Client()
     {
         super("Kohaat Client");
-        setSize (1000, 1000);
+        setSize (600, 350);
         setLocation (100,100);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(null);
@@ -56,35 +56,37 @@ public class GUI_Client extends JFrame implements ActionListener
         nameInput.setBounds(200,100,200,20);
         add(nameInput);
 
-        connect = new JButton("Connect");
+        connect = new JButton("Verbinden");
         connect.setBounds(30,150,150,40);
         add (connect);
         connect.addActionListener(this);
 
-        ans0 = new JButton("Waiting...");
+        ans0 = new JButton("Warte...");
         ans0.setBounds(30,50,400,60);
         ans0.setBackground(Color.GREEN);
         add (ans0);
         ans0.addActionListener(this);
         ans0.setVisible(false);
 
-        ans1 = new JButton("Waiting...");
+        ans1 = new JButton("Warte...");
         ans1.setBounds(500,50,400,60);
         ans1.setBackground(Color.RED);
+        ans1.setForeground(Color.WHITE);
         add (ans1);
         ans1.addActionListener(this);
         ans1.setVisible(false);
 
-        ans2 = new JButton("Waiting...");
+        ans2 = new JButton("Warte...");
         ans2.setBounds(30,200,400,60);
         ans2.setBackground(Color.YELLOW);
         add (ans2);
         ans2.addActionListener(this);
         ans2.setVisible(false);
 
-        ans3 = new JButton("Waiting...");
+        ans3 = new JButton("Warte...");
         ans3.setBounds(500,200,400,60);
         ans3.setBackground(Color.BLUE);
+        ans3.setForeground(Color.WHITE);
         add (ans3);
         ans3.addActionListener(this);
         ans3.setVisible(false);
@@ -109,7 +111,8 @@ public class GUI_Client extends JFrame implements ActionListener
                 nameInput.setVisible(false);
 
                 connect.setVisible(false);
-
+                setSize (950, 350);
+                
                 namePointsLabel.setVisible(true);
                 ans0.setVisible(true);
                 ans1.setVisible(true);
@@ -123,7 +126,7 @@ public class GUI_Client extends JFrame implements ActionListener
 
                 System.out.println(e.getMessage());
                 e.printStackTrace();
-                errorLog.setText("An error occured while establishing your connection.");
+                errorLog.setText("Verbindung fehlgeschlagen.");
             }
 
         } else {
@@ -132,15 +135,20 @@ public class GUI_Client extends JFrame implements ActionListener
 
             if(ev.getSource() == ans0) {
                 kohaatClient.sendAnswer(ans0.getText());
-
+                kohaatClient.sendAnswer(ans0.getText());
+                ans0.setText("Deine Antwort: " + ans0.getText());
             } else if(ev.getSource() == ans1) {
                 kohaatClient.sendAnswer(ans1.getText());
-
+                kohaatClient.sendAnswer(ans1.getText());
+                ans1.setText("Deine Antwort: " + ans1.getText());
             } else if(ev.getSource() == ans2) {
                 kohaatClient.sendAnswer(ans2.getText());
-
+                kohaatClient.sendAnswer(ans2.getText());
+                ans2.setText("Deine Antwort: " + ans2.getText());
             } else if(ev.getSource() == ans3) {
                 kohaatClient.sendAnswer(ans3.getText());
+                kohaatClient.sendAnswer(ans3.getText());
+                ans3.setText("Deine Antwort: " + ans3.getText());
             }
         }
     }
@@ -158,6 +166,6 @@ public class GUI_Client extends JFrame implements ActionListener
 
     public void newStatus(String name, int points) {
 
-        namePointsLabel.setText("Player: " + name + "Current Points: " + points);
+        namePointsLabel.setText("Spieler: " + name + " Deine Punkte: " + points);
     }
 }
