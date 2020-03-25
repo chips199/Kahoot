@@ -47,7 +47,6 @@ public class Controller {
 					e.printStackTrace();
 				}
 			} while (startQuestionTime + 10000 >= System.currentTimeMillis() || checkEveryoneHasAnswered());
-			int remainingTime = 10 - (int) ((System.currentTimeMillis() - startQuestionTime) / 1000);
 			sendPointsToEach();
 		}
 		rangliste();
